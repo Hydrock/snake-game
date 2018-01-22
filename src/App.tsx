@@ -1,19 +1,27 @@
 import * as React from 'react';
-import './App.css';
+import Field from './components/field';
+import Settings from './components/settings';
 
-const logo = require('./logo.svg');
+declare global {
+  interface Window { snakeSettings: {
+      size: Array<number>
+    }; 
+  }
+}
+
+// init settings
+window.snakeSettings = {
+  size: [10, 10]
+};
+
+// let size = [10, 10];
 
 class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
+        <Field size={window.snakeSettings.size}/>
+        <Settings size={window.snakeSettings.size}/>
       </div>
     );
   }
