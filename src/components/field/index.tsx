@@ -3,25 +3,38 @@ import './style.css';
 
 import Cell from '../cell';
 
-interface FieldProps { size: Array<number>; }
+interface FieldProps { 
+  size: {
+    width: number;
+    height: number;
+  };
+}
+
 interface FieldState { width: number; height: number; }
 
 class Field extends React.Component<FieldProps, FieldState> {
-  constructor(props: FieldProps) {
-    super(props);
-    this.state = {
-        width: this.props.size[0],
-        height: this.props.size[1],
-    };
-  }
+  // constructor(props: FieldProps) {
+  //   super(props);
+  //   this.state = {
+  //       width: this.props.size.width,
+  //       height: this.props.size.height
+  //   };
+  // }
+
+  // componentWillReceiveProps (nextProps: any) {
+  //   this.setState({
+  //     width: nextProps.width,
+  //     height: nextProps.height
+  //   });
+  // }
 
   renderCells = () => {
-    const cellsQuantity = this.state.width * this.state.height;
+    const cellsQuantity = this.props.size.width * this.props.size.height;
 
     let cells = new Array;
 
     for (let i = 0; i < cellsQuantity; i++) {
-      cells.push(<Cell/>);
+      cells.push(<Cell key={i} />);
     }
 
     return cells;
@@ -29,8 +42,8 @@ class Field extends React.Component<FieldProps, FieldState> {
 
   getFieldStyles = () => {
     return {
-      width: 20 * this.state.width + 'px',
-      height: 20 * this.state.height + 'px',
+      width: 20 * this.props.size.width + 'px',
+      height: 20 * this.props.size.height + 'px',
     };
   }
 

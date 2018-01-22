@@ -1,28 +1,26 @@
 import * as React from 'react';
-import Field from './components/field';
-import Settings from './components/settings';
+import Field from './containers/field';
+import Settings from './containers/settings';
+import { Provider } from 'react-redux';
+
+import store from './store';
 
 declare global {
-  interface Window { snakeSettings: {
-      size: Array<number>
-    }; 
+  interface Window { store: {};
   }
 }
 
-// init settings
-window.snakeSettings = {
-  size: [10, 10]
-};
-
-// let size = [10, 10];
+window.store = store;
 
 class App extends React.Component {
   render() {
     return (
-      <div className="App">
-        <Field size={window.snakeSettings.size}/>
-        <Settings size={window.snakeSettings.size}/>
-      </div>
+      <Provider store={store}>
+        <div className="App">
+          <Field />
+          <Settings/>
+        </div>
+      </Provider>
     );
   }
 }
