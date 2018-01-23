@@ -48,7 +48,6 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
 
   updateStore = (e: any) => {
     e.preventDefault();
-    console.log(this.state);
     setFormSize({
       width: this.state.width,
       height: this.state.height,

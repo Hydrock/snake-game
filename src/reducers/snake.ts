@@ -10,11 +10,12 @@ type Action = {
 };
 
 let initState = {
-  number: 10,
-  positionX: 4,
-  positionY: 4,
+  number: 12,
+  positionX: 2,
+  positionY: 2,
   verticalVector: c.SNAKE_VERTICAL_VECTOR_UP,
   horizontalVector: c.SNAKE_HORIZONTAL_VECTOR_RIGHT,
+  direction: c.SNAKE_HORIZONTAL_VECTOR_RIGHT
 };
 
 export default function snake(state: StateDef = initState, action: Action) {

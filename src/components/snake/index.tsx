@@ -13,59 +13,25 @@ interface SnakeProps {
     positionY: number;
     verticalVector: string;
     horizontalVector: string;
+    direction: string;
   };
 }
 
 class Snake extends React.Component<SnakeProps> {
 
-  // getStartPosition = () => {
-  //   const startHorizontal = this.props.size.width / 2;
-  //   const startVertical = this.props.size.height / 2;
-  //   return {startHorizontal, startVertical};
-  // }
-
-  // calculateCellNumberStart = () => {
-  //   // const coordinates = this.getStartPosition();
-  //   const coordinates = {
-  //     startHorizontal: this.props.snake.positionX,
-  //     startVertical: this.props.snake.positionY,
-  //   };
-  //   const cellsInFullRows = (coordinates.startVertical - 1) * this.props.size.width;
-  //   const cellNumber = cellsInFullRows + coordinates.startHorizontal;
-  //   return cellNumber;
-  // }
-
   calculateCellNumber = (x: any, y: any) => {
-    const coordinates = {
-      startHorizontal: x,
-      startVertical: y,
-    };
-    const cellsInFullRows = (coordinates.startVertical - 1) * this.props.size.width;
-    const cellNumber = cellsInFullRows + coordinates.startHorizontal;
+    const cellsInFullRows = (y - 1) * this.props.size.width;
+    const cellNumber = cellsInFullRows + x;
     return cellNumber;
   }
 
   checkData = () => {
     let snakeObj = this.props.snake;
 
-    console.log(snakeObj);
-    let positionX;
-    let positionY;
+    let positionX = snakeObj.positionX;
+    let positionY = snakeObj.positionY;
 
-    switch (snakeObj.horizontalVector) {
-      case c.SNAKE_HORIZONTAL_VECTOR_RIGHT:
-        positionX = snakeObj.positionX + 1;
-        if (positionX > this.props.size.width) { positionX = 1; }
-        break;
-      case c.SNAKE_HORIZONTAL_VECTOR_LEFT:
-        positionX = snakeObj.positionX - 1;
-        if (positionX < 1) { positionX = this.props.size.width; }
-        break;
-      default:
-        break;
-    }
-    
-    switch (snakeObj.verticalVector) {
+    switch (snakeObj.direction) {
       case c.SNAKE_VERTICAL_VECTOR_UP:
         positionY = snakeObj.positionY - 1;
         if (positionY < 1) { positionY = this.props.size.height; }
@@ -73,6 +39,14 @@ class Snake extends React.Component<SnakeProps> {
       case c.SNAKE_VERTICAL_VECTOR_DOWN:
         positionY = snakeObj.positionY + 1;
         if (positionY > this.props.size.height) { positionY = 1; }
+        break;
+      case c.SNAKE_HORIZONTAL_VECTOR_RIGHT:
+        positionX = snakeObj.positionX + 1;
+        if (positionX > this.props.size.width) { positionX = 1; }
+        break;
+      case c.SNAKE_HORIZONTAL_VECTOR_LEFT:
+        positionX = snakeObj.positionX - 1;
+        if (positionX < 1) { positionX = this.props.size.width; }
         break;
       default:
         break;
@@ -96,12 +70,43 @@ class Snake extends React.Component<SnakeProps> {
     step();
   }
 
-  componentDidMount() {
-    // setSnakeData({
-    //   number: this.calculateCellNumberStart()
-    // });
+  changeDirection = (e: any) => {
+    const { direction } = this.props.snake;
 
+    switch (e.keyCode) {
+      case 38: // up
+        if (direction !== c.SNAKE_VERTICAL_VECTOR_DOWN) { 
+          setSnakeData({direction: c.SNAKE_VERTICAL_VECTOR_UP});
+        }
+        break;
+      case 40: // down
+        if (direction !== c.SNAKE_VERTICAL_VECTOR_UP) { 
+          setSnakeData({direction: c.SNAKE_VERTICAL_VECTOR_DOWN});
+        }
+        break;
+      case 39: // right
+        setSnakeData({direction: c.SNAKE_HORIZONTAL_VECTOR_RIGHT});
+
+        if (direction !== c.SNAKE_HORIZONTAL_VECTOR_LEFT) { 
+          setSnakeData({direction: c.SNAKE_HORIZONTAL_VECTOR_RIGHT});
+        }
+        break;
+      case 37: // left
+        if (direction !== c.SNAKE_HORIZONTAL_VECTOR_RIGHT) { 
+          setSnakeData({direction: c.SNAKE_HORIZONTAL_VECTOR_LEFT});
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
+  componentDidMount() {
     this.startSnake();
+
+    document.addEventListener('keydown', (e) => {
+      this.changeDirection(e);
+    });
   }
 
   render() {
