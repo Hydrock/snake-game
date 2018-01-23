@@ -11,9 +11,9 @@ interface SnakeProps {
     number: number;
     positionX: number;
     positionY: number;
-    verticalVector: string;
-    horizontalVector: string;
     direction: string;
+    tailLength: number;
+    tailData: Array<number>;
   };
 }
 
@@ -57,6 +57,9 @@ class Snake extends React.Component<SnakeProps> {
       positionX: positionX,
       positionY: positionY
     });
+
+    this.changeTail();
+    // this.checkCollizionSelf();
   }
 
   startSnake = () => {
@@ -64,7 +67,7 @@ class Snake extends React.Component<SnakeProps> {
     let checkData = this.checkData;
 
     function step() {
-      setTimeout(function () { checkData(); step(); }, 1000);
+      setTimeout(function () { checkData(); step(); }, 300);
     }
 
     step();
@@ -101,6 +104,36 @@ class Snake extends React.Component<SnakeProps> {
     }
   }
 
+  changeTail () {
+    let { tailData, tailLength } = this.props.snake;
+
+    let tailNumber = this.props.snake.number;
+
+    tailData.unshift(tailNumber);
+
+    let newTail = tailData;
+
+    if (newTail.length > tailLength) {
+      newTail = newTail.slice(1, tailLength);
+    }
+    
+    setSnakeData({tailData: newTail});
+
+    console.log(tailData);
+  }
+
+  checkCollizionSelf = () => {
+    let tailNumber = this.props.snake.number;
+    let { tailData } = this.props.snake;
+
+    for (let i = 0; i < tailData.length; i++) {
+      if (tailData[i] === tailNumber) {
+        alert('Lose!');
+      }
+      
+    }
+  }
+
   componentDidMount() {
     this.startSnake();
 
@@ -111,9 +144,7 @@ class Snake extends React.Component<SnakeProps> {
 
   render() {
     return (
-      <div>
-        asffasfasf
-      </div>
+      <div/>
     );
   }
 }

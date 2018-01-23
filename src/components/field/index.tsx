@@ -12,8 +12,9 @@ interface FieldProps {
     number: number;
     positionX: number;
     positionY: number;
-    verticalVector: string;
-    horizontalVector: string;
+    direction: string;
+    tailLength: number;
+    tailData: Array<number>;
   };
 }
 
@@ -24,19 +25,31 @@ class Field extends React.Component<FieldProps, FieldState> {
   renderCells = () => {
     const snakeNumber = this.props.snake.number;
     const cellsQuantity = this.props.size.width * this.props.size.height;
+    const { tailData } = this.props.snake;
 
     let cells = new Array;
 
     for (let i = 1; i < cellsQuantity; i++) {
-      cells.push(<Cell key={i} title={i} className={secCellStyle(i, snakeNumber)} />);
+      cells.push(<Cell key={i} title={i} className={secCellStyle(i, snakeNumber, tailData)} />);
     }
 
-    function secCellStyle (i: number, n: number) {
+    function secCellStyle (i: number, n: number, td: Array<number>) {
+      let styleClass = '';
+
       if (i === n) {
-        return 'bg-red';
+        styleClass = styleClass + ' bg-red';
       } else {
-        return '';
+        styleClass = '';
       }
+
+      // debugger;
+      for (let index = 0; index < tailData.length; index++) {
+        if (i === tailData[index]) {
+          styleClass = styleClass + ' bg-red';
+        }
+      }
+
+      return styleClass;
     }
 
     return cells;
