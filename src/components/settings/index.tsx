@@ -1,5 +1,5 @@
 import * as React from 'react';
-
+import './style.css';
 import { setFormSize } from '../../actions/index';
 
 interface SettingsProps { 
@@ -58,18 +58,12 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
   render() {
     return (
       <div>
-        <form action="#" onSubmit={this.updateStore}>
-          <div>
+        <form action="#" onSubmit={this.updateStore} className="settingsForm">
             <label htmlFor="wf">Width Field</label>
             <input id="wf" type="text" defaultValue={this.state.width.toString()} onChange={this.onChangeWidth} />
-          </div>
-          <div>
             <label htmlFor="hf">Height Field</label>
             <input id="hf" type="text" defaultValue={this.state.height.toString()} onChange={this.onChangeHeight}/>
-          </div>
-          <div>
             <input type="submit" value="Submit settings"  />
-          </div>
         </form>
       </div>
     );

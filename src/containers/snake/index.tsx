@@ -1,4 +1,4 @@
-import Field from '../../components/field';
+import Snake from '../../components/snake';
 import { connect } from 'react-redux';
 
 function mapStateToProps(state: any) {
@@ -8,4 +8,4 @@ function mapStateToProps(state: any) {
   };
 }
 
-export default connect(mapStateToProps)(Field);
+export default connect(mapStateToProps)(Snake);

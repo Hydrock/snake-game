@@ -1,11 +1,15 @@
 import * as React from 'react';
 import './style.css';
 
-class Cell extends React.Component {
-  
+interface CellProps { 
+  title: number;
+  className: string;
+}
+
+class Cell extends React.Component<CellProps> {
   render() {
     return (
-      <div className="cell"/>
+      <div title={String(this.props.title)} className={this.props.className + ' cell'} />
     );
   }
 }

@@ -7,3 +7,10 @@ export function setFormSize(obj: object) {
     payload: obj
   });
 }
+
+export function setSnakeData(obj: object) {
+  store.dispatch({
+    type: c.SET_SNAKE_DATA,
+    payload: obj
+  });
+}

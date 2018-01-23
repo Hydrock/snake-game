@@ -5,12 +5,15 @@ import { Provider } from 'react-redux';
 
 import store from './store';
 
+import Snake from './containers/snake';
+
 declare global {
-  interface Window { store: {};
-  }
+  interface Window { store: {}; }
 }
 
 window.store = store;
+
+// Snake(store.getState());
 
 class App extends React.Component {
   render() {
@@ -19,6 +22,7 @@ class App extends React.Component {
         <div className="App">
           <Field />
           <Settings/>
+          <Snake />
         </div>
       </Provider>
     );

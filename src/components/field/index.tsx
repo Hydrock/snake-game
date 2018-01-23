@@ -8,33 +8,35 @@ interface FieldProps {
     width: number;
     height: number;
   };
+  snake: {
+    number: number;
+    positionX: number;
+    positionY: number;
+    verticalVector: string;
+    horizontalVector: string;
+  };
 }
 
 interface FieldState { width: number; height: number; }
 
 class Field extends React.Component<FieldProps, FieldState> {
-  // constructor(props: FieldProps) {
-  //   super(props);
-  //   this.state = {
-  //       width: this.props.size.width,
-  //       height: this.props.size.height
-  //   };
-  // }
-
-  // componentWillReceiveProps (nextProps: any) {
-  //   this.setState({
-  //     width: nextProps.width,
-  //     height: nextProps.height
-  //   });
-  // }
-
+  
   renderCells = () => {
+    const snakeNumber = this.props.snake.number;
     const cellsQuantity = this.props.size.width * this.props.size.height;
 
     let cells = new Array;
 
-    for (let i = 0; i < cellsQuantity; i++) {
-      cells.push(<Cell key={i} />);
+    for (let i = 1; i < cellsQuantity; i++) {
+      cells.push(<Cell key={i} title={i} className={secCellStyle(i, snakeNumber)} />);
+    }
+
+    function secCellStyle (i: number, n: number) {
+      if (i === n) {
+        return 'bg-red';
+      } else {
+        return '';
+      }
     }
 
     return cells;
