@@ -14,6 +14,7 @@ interface SnakeProps {
     direction: string;
     tailLength: number;
     tailData: Array<number>;
+    speed: number;
   };
 }
 
@@ -63,11 +64,11 @@ class Snake extends React.Component<SnakeProps> {
   }
 
   startSnake = () => {
-    // let snake = this.props.snake;
+    let { speed } = this.props.snake;
     let checkData = this.checkData;
 
     function step() {
-      setTimeout(function () { checkData(); step(); }, 300);
+      setTimeout(function () { checkData(); step(); }, speed);
     }
 
     step();
@@ -113,13 +114,12 @@ class Snake extends React.Component<SnakeProps> {
 
     let newTail = tailData;
 
-    if (newTail.length > tailLength) {
-      newTail = newTail.slice(1, tailLength);
+    if (newTail.length >= tailLength) {
+      newTail = newTail.splice(0, tailLength);
     }
     
     setSnakeData({tailData: newTail});
 
-    console.log(tailData);
   }
 
   checkCollizionSelf = () => {

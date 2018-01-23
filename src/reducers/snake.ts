@@ -15,7 +15,8 @@ let initState = {
   positionY: 2,
   direction: c.SNAKE_HORIZONTAL_VECTOR_RIGHT,
   tailLength: 8,
-  tailData: []
+  tailData: [],
+  speed: 100,
 };
 
 export default function snake(state: StateDef = initState, action: Action) {
